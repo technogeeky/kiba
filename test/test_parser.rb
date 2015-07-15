@@ -95,8 +95,18 @@ RUBY
     block = Proc.new do
       # the stack can be read from
       source TestEnumerableSource, stack[:some_input]
-      # and written to
+      # and written to at parse time
       stack[:some_output] = 'hello'
+
+      pre_process do
+        # it can also be written at run time
+        stack[:row_count] = 0
+      end
+
+      transform do |row|
+        stack[:row_count] += 1
+        row
+      end
     end
 
     stack = { some_input: (1..4) }
@@ -105,5 +115,10 @@ RUBY
     assert_equal (1..4), control.sources[0][:args].first
     # after parse we can check what is in there
     assert_equal 'hello', stack[:some_output]
+
+    assert_equal nil, stack[:row_count]
+    Kiba.run(control)
+
+    assert_equal 4, stack[:row_count]
   end
 end
