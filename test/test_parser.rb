@@ -1,6 +1,7 @@
 require_relative 'helper'
 
 require_relative 'support/test_rename_field_transform'
+require_relative 'support/test_enumerable_source'
 
 class DummyClass
 end
