@@ -1,7 +1,12 @@
 module Kiba
   class Context
-    def initialize(control)
+    def initialize(control, stack = nil)
       @control = control
+      @stack = stack
+    end
+
+    def stack
+      @stack
     end
 
     def pre_process(&block)

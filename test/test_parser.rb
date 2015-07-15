@@ -89,4 +89,20 @@ RUBY
   ensure
     remove_files('test/tmp/etl-common.rb', 'test/tmp/etl-main.rb')
   end
+
+  def test_stack_read_and_write_at_parse_time
+    block = Proc.new do
+      # the stack can be read from
+      source TestEnumerableSource, stack[:some_input]
+      # and written to
+      stack[:some_output] = 'hello'
+    end
+
+    stack = { some_input: (1..4) }
+    control = Kiba.parse(nil, nil, stack, &block)
+    # job declaration must have been impacted
+    assert_equal (1..4), control.sources[0][:args].first
+    # after parse we can check what is in there
+    assert_equal 'hello', stack[:some_output]
+  end
 end
