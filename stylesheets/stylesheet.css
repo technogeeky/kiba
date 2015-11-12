@@ -484,3 +484,15 @@ footer a:hover {
 .cta {
 	margin-bottom: 30px;
 }
+
+.consulting_services {
+	background-color: black;
+	padding: 0;
+	text-align: center;
+	color: #fff;
+	text-shadow: none;
+}
+
+.consulting_services p {
+	margin-bottom: 0;
+}
