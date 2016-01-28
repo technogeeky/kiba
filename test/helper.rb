@@ -14,4 +14,8 @@ class Kiba::Test < Minitest::Test
   def fixture(file)
     File.join(File.dirname(__FILE__), 'fixtures', file)
   end
+  
+  def system!(command)
+    fail "Command fail" unless system(command)
+  end
 end

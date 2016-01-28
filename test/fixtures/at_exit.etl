@@ -1,0 +1,7 @@
+at_exit do
+  # TODO: pass file as a parameter
+  test_file = 'at_exit.etl.ran'
+  IO.write(test_file, $!)
+end
+
+fail "Parse error"
