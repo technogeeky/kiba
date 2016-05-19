@@ -7,6 +7,10 @@ module Kiba
     def sources
       @sources ||= []
     end
+    
+    def ctransforms
+      @ctransforms ||= []
+    end
 
     def transforms
       @transforms ||= []
