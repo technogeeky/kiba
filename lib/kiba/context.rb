@@ -15,6 +15,10 @@ module Kiba
     def transform(klass = nil, *initialization_params, &block)
       @control.transforms << { klass: klass, args: initialization_params, block: block }
     end
+    
+    def ctransform(klass = nil, *initalization_params, &block)
+      @control.transforms << { klass: klass, args: initalization_params, block: block }
+    end
 
     def destination(klass, *initialization_params)
       @control.destinations << { klass: klass, args: initialization_params }
