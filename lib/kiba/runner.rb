@@ -12,6 +12,7 @@ module Kiba
       run_pre_processes(control)
       process_rows(
         to_instances(control.sources),
+        to_instances(control.ctransforms, true),
         to_instances(control.transforms, true),
         to_instances(control.destinations)
       )
@@ -28,16 +29,16 @@ module Kiba
       to_instances(control.post_processes, true, false).each(&:call)
     end
 
-    def process_rows(sources, transforms, destinations)
+    def process_rows(sources, ctransforms, transforms, destinations)
       sources.each do |source|
-        source.each do |row|
-          transforms.each do |transform|
-            row = transform.process(row)
-            break unless row
-          end
-          next unless row
-          destinations.each do |destination|
-            destination.write(row)
+        source.each do |columns|
+          ctransforms.each { |transform| columnsets = transform.process(columns); break unless columnset } 
+          columnset.each do |row|
+            transforms.each { |transform| row = transform.process(row); break unless row}
+            next unless row
+            destinations.each do |destination|
+              destination.write(row)
+            end
           end
         end
       end
